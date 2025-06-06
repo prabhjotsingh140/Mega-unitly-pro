@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mega Utility Pro </title>
+    <style>
+        /* --- Global Styles & Variables --- */
+        :root {
+            --bg-color: #f4f7f6;
+            --primary-color: #4a90e2;  /* General Accent */
+            --secondary-color: #50e3c2;/* Calculators Ops */
+            --tertiary-color: #f39c12; /* Advanced Calc Accent, BMI Underweight, Palette Gen */
+            --quaternary-color: #8e44ad;/* Age Calc Accent, TextHex */
+            --quinary-color: #3498db;   /* Unit Converter Accent */
+            --sixtiary-color: #1abc9c;  /* Tip Calculator Accent */
+            --septenary-color: #d35400; /* Discount Calculator Accent, Aspect Ratio, Read Aloud */
+            --octonary-color: #2980b9;  /* Percentage Calculator Accent, IP Info */
+            --nonary-color: #27ae60;    /* Password Generator Accent, Slugify */
+            --denary-color: #c0392b;    /* Color Converter Accent, Screen Res */
+            --undenary-color: #7f8c8d;  /* Date Calculator Accent, Notes Accent */
+            --duodenary-color: #34495e; /* Text Analyzer Accent */
+            --tredenary-color: #16a085; /* Random Number Gen Accent */
+            --quattuordenary-color: #e67e22; /* Loan Calculator Accent */
+            --quindenary-color: #9b59b6;   /* Body Fat Calc Accent */
+            --septendenary-color: #f1c40f; /* Time Zone Converter Accent */
+
+            /* Previous new feature colors */
+            --stopwatch-accent: #58D68D;
+            --qrcode-accent: #5DADE2;
+            --base64-accent: #AF7AC5;
+            --caseconv-accent: #F5B041;
+            --lorem-accent: #5499C7;
+            --filehash-accent: #48C9B0;
+            --countdown-accent: #EC7063;
+            --baseconv-accent: #884EA0;
+            --urlencdec-accent: #2E86C1;
+
+            /* Newest feature colors (Set 2) */
+            --reversetext-accent: #5dade2;
+            --duplicatelines-accent: #f1c40f;
+            --sortlines-accent: #af7ac5;
+            --findreplace-accent: #58d68d;
+            --texthash-accent: #e67e22;
+            --htmlentities-accent: #3498db;
+            --jsonformatter-accent: #9b59b6;
+            --unixtimestamp-accent: #1abc9c;
+            --uuid-accent: #e74c3c;
+            --salestax-accent: #2ecc71;
+            --diceroller-accent: #d35400;
+            --coinflipper-accent: #f39c12;
+            --morsecode-accent: #34495e;
+            --binarytranslator-accent: #2980b9;
+
+            /* Newest Feature Colors (Set 3) */
+            --md5hash-accent: #17A589;
+            --rot13-accent: #D4AC0D;
+            /* TextHex uses --quaternary-color */
+            /* Slugify uses --nonary-color */
+            /* IPInfo uses --octonary-color */
+            /* ScreenRes uses --denary-color */
+            /* PaletteGen uses --tertiary-color */
+            /* ReadAloud uses --septenary-color */
+
+
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --button-hover-bg: #3a7bc8;
+            --input-focus-border: #4a90e2;
+            --error-color: #e74c3c;
+            --success-color: #2ecc71;
+
+            --adv-btn-bg: #e9ecef;
+            --adv-btn-hover-bg: #ced4da;
+            --adv-func-btn-bg: #d1ecf1;
+            --adv-func-btn-hover-bg: #b9e0e8;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .app-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px var(--shadow-color);
+            padding: 20px 25px;
+            width: 100%;
+            max-width: 620px;
+            overflow-y: auto;
+            max-height: 95vh;
+        }
+
+        h1 { text-align: center; color: var(--primary-color); margin-bottom: 15px; font-size: 1.6em; }
+        h2 { text-align: center; color: var(--text-color); margin-top: 0; margin-bottom: 15px; font-size: 1.25em; }
+
+        /* --- Tabs --- */
+        .tabs { display: flex; flex-wrap: wrap; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); }
+        .tab-button {
+            flex-basis: calc(100% / 9); /* Aim for roughly 9 tabs per row */
+            min-width: 35px; /* Further reduced */
+            padding: 4px 0px; /* Further reduced padding */
+            cursor: pointer; background-color: transparent; border: none;
+            border-bottom: 3px solid transparent;
+            font-size: 0.40em; /* Further Adjusted for many tabs */
+            font-weight: 600; color: var(--text-color);
+            transition: all 0.3s ease; outline: none; text-align: center;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            margin-bottom: 1px; /* Reduced margin */
+            box-sizing: border-box;
+        }
+        .tab-button:hover { background-color: var(--bg-color); }
+        .tab-button.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Common Form Styles --- */
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; color: var(--text-color); font-size: 0.9em; }
+        .form-group input[type="number"],
+        .form-group input[type="date"],
+        .form-group input[type="datetime-local"],
+        .form-group input[type="text"],
+        .form-group input[type="file"],
+        .form-group input[type="time"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 9px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 0.9em;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        .form-group input[type="number"]:focus,
+        .form-group input[type="date"]:focus,
+        .form-group input[type="datetime-local"]:focus,
+        .form-group input[type="text"]:focus,
+        .form-group input[type="file"]:focus,
+        .form-group input[type="time"]:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none; border-color: var(--input-focus-border);
+            box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus-border) 20%, transparent);
+        }
+        .form-group input[type="range"] { width: 100%; margin-top: 5px;}
+        .form-group-inline { display: flex; align-items: center; gap: 10px; }
+        .form-group-inline label { margin-bottom: 0; }
+        .form-group-inline input[type="radio"],
+        .form-group-inline input[type="checkbox"] { width: auto; }
+
+
+        .action-button {
+            display: block; width: 100%; padding: 11px 15px;
+            color: white; border: none; border-radius: 5px;
+            font-size: 0.95em; font-weight: 600; cursor: pointer;
+            transition: background-color 0.3s ease; margin-top: 8px;
+            background-color: var(--primary-color);
+        }
+        .action-button:hover { filter: brightness(110%); }
+        .small-action-button { padding: 6px 10px; font-size: 0.8em; margin-left: 10px; width: auto; display: inline-block;}
+        .button-group { display: flex; gap: 8px; margin-bottom: 10px; }
+        .button-group button { flex-grow: 1; }
+
+
+        /* --- Result/Output Containers --- */
+        .result-container {
+            margin-top: 18px; padding: 12px 15px; background-color: var(--bg-color);
+            border-radius: 5px; text-align: center; border: 1px solid var(--border-color);
+            word-break: break-all;
+        }
+        .result-container p { margin: 4px 0; font-size: 0.95em; }
+        .result-container .value, .result-container .main-value { font-size: 1.4em; font-weight: bold; color: var(--primary-color); }
+        .result-label { font-weight: normal; color: var(--text-color); font-size: 0.9em;}
+        .result-item { margin: 8px 0; text-align: left; } /* Adjusted for IP Info */
+        .result-item-small { font-size: 0.9em; margin: 5px 0; }
+        .result-item-small .result-label { font-weight: 600;}
+        .result-item-small .value { font-size: 1.1em; font-weight: normal;}
+        .output-textarea { min-height: 80px; font-family: 'Courier New', Courier, monospace; font-size: 0.9em; }
+
+
+        /* --- BMI Specific --- */
+        #bmiResultContainer .bmi-value { font-size: 1.8em !important; }
+        #bmiResultContainer .bmi-category { font-size: 1em; font-weight: 600; }
+        #bmiResultContainer .bmi-category.underweight { color: var(--tertiary-color); }
+        #bmiResultContainer .bmi-category.normal { color: var(--success-color); }
+        #bmiResultContainer .bmi-category.overweight { color: var(--quattuordenary-color); }
+        #bmiResultContainer .bmi-category.obese { color: var(--error-color); }
+
+        /* --- Calculator Common Display & Buttons --- */
+        .calculator-display-common { width: 100%; box-sizing:border-box; background-color: var(--bg-color); color: var(--text-color); font-size: 1.8em; padding: 10px 12px; text-align: right; border-radius: 5px; margin-bottom: 12px; overflow-x: auto; white-space: nowrap; border: 1px solid var(--border-color); min-height: 36px; line-height: 1.2; }
+        .calculator-buttons-grid button { padding: 12px; font-size: 1.1em; border: none; border-radius: 5px; cursor: pointer; background-color: var(--adv-btn-bg); color: var(--text-color); transition: background-color 0.2s ease, transform 0.1s ease; }
+        .calculator-buttons-grid button:hover { background-color: var(--adv-btn-hover-bg); }
+        .calculator-buttons-grid button:active { transform: scale(0.95); }
+        .calculator-buttons-grid .operator { background-color: var(--secondary-color); color: white; }
+        .calculator-buttons-grid .operator:hover { filter: brightness(110%); }
+        .calculator-buttons-grid .equals { background-color: var(--primary-color); color: white; }
+        .calculator-buttons-grid .equals:hover { filter: brightness(110%); }
+        .calculator-buttons-grid .clear { background-color: #adb5bd; color: white; }
+        .calculator-buttons-grid .clear:hover { filter: brightness(110%); }
+        .calculator-buttons-grid .function-btn,
+        .calculator-buttons-grid .unary-op-btn
+         { background-color: var(--adv-func-btn-bg); }
+        .calculator-buttons-grid .function-btn:hover,
+        .calculator-buttons-grid .unary-op-btn:hover
+         { background-color: var(--adv-func-btn-hover-bg); }
+        .calculator-buttons-grid .wide-btn { grid-column: span 2; }
+
+        .simple-calculator-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+        .simple-calculator-buttons button {font-size: 1.1em; padding: 14px;}
+
+        .advanced-calculator-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .deg-rad-toggle { padding: 6px 9px; font-size: 0.8em; background-color: var(--tertiary-color); color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .deg-rad-toggle:hover { filter: brightness(110%); }
+        .advanced-calculator-buttons { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
+        .advanced-calculator-buttons button {font-size: 0.95em; padding: 10px 6px;}
+
+        /* --- Age Calculator --- */
+        #ageResultOutput .age-segment .value { color: var(--quaternary-color); font-size: 1.2em;}
+        #ageResultOutput .total-time { margin-top: 12px; border-top: 1px solid var(--border-color); padding-top: 8px;}
+        #ageResultOutput .total-time p {font-size: 0.85em;}
+
+        /* --- Unit Converter --- */
+        .unit-converter-io { display: flex; gap: 8px; align-items: flex-end; margin-bottom:12px;}
+        .unit-converter-io .form-group { flex: 1; margin-bottom: 0;}
+        .unit-converter-io .arrow { font-size: 1.3em; color: var(--quinary-color); padding-bottom: 8px; }
+        #unitConvResult { padding:9px; border: 1px solid var(--border-color); border-radius:5px; min-height: 1.5em; text-align:right; background-color: var(--bg-color); font-size:0.9em; }
+        #unitConvType {margin-bottom: 12px;}
+
+        /* --- Tip Calculator --- */
+        .tip-options { display: flex; justify-content: space-around; margin-bottom: 10px; }
+        .tip-options button { padding: 8px 10px; font-size: 0.85em; background-color: var(--adv-btn-bg); border: 1px solid var(--border-color); border-radius: 4px; cursor: pointer; }
+        .tip-options button.active { background-color: var(--sixtiary-color); color: white; border-color: var(--sixtiary-color); }
+        #tipResultOutput .value { color: var(--sixtiary-color); }
+
+        /* --- Discount Calculator --- */
+        #discountResultOutput .value { color: var(--septenary-color); }
+
+        /* --- Percentage Calculator --- */
+        #percentageCalcType { margin-bottom: 12px; }
+        #percentageResultOutput .value { color: var(--octonary-color); }
+        .percentage-inputs .form-group { margin-bottom: 8px; }
+        .percentage-calc-inputs-container > div { margin-bottom: 10px; }
+
+        /* --- Password Generator --- */
+        .password-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px; }
+        .password-options .form-group { margin-bottom: 0; display: flex; align-items: center; }
+        .password-options label { margin-left: 6px; margin-bottom: 0; font-weight: normal; font-size: 0.85em; }
+        .password-options input[type="checkbox"] { width: auto; }
+        #generatedPasswordContainer { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+        #generatedPassword { flex-grow: 1; padding: 8px; border-radius: 4px; background-color: var(--bg-color); border: 1px solid var(--border-color); font-family: 'Courier New', Courier, monospace; font-size: 0.95em; word-break: break-all;}
+        #copyPasswordBtn { padding: 8px 12px; font-size: 0.85em; background-color: var(--adv-btn-bg); border: 1px solid var(--border-color); border-radius: 4px; cursor: pointer;}
+        #copyPasswordBtn:hover { background-color: var(--adv-btn-hover-bg); }
+        #copyMessage, .copy-message { font-size: 0.8em; color: var(--success-color); margin-left: 5px; min-height: 1em; display: inline-block;}
+
+        /* --- Color Converter --- */
+        #colorConvType { margin-bottom: 12px; }
+        .color-input-group { display: flex; gap: 8px; align-items: center; margin-bottom: 10px;}
+        .color-input-group label { flex-basis: 20px; margin-bottom: 0; }
+        .color-input-group input[type="number"] { width: 60px; text-align: center; }
+        #colorPreview { width: 50px; height: 50px; border: 1px solid var(--border-color); border-radius: 4px; margin: 10px auto; background-color: transparent; }
+        #colorConvResultOutput .value { color: var(--denary-color); }
+
+        /* --- Date Calculator --- */
+        #dateCalcType { margin-bottom: 12px; }
+        .date-calc-inputs-duration, .date-calc-inputs-addsub { display: none; }
+        .date-calc-inputs-addsub .form-group { display: inline-block; width: calc(33% - 10px); margin-right: 10px;}
+        .date-calc-inputs-addsub .form-group:last-child { margin-right: 0;}
+        #dateCalcResultOutput .value { color: var(--undenary-color); }
+
+        /* --- Text Analyzer --- */
+        #textToAnalyze { min-height: 100px; resize: vertical; }
+        #textAnalysisResult .value { color: var(--duodenary-color); }
+        #textAnalysisResult .result-item { text-align: left;}
+        #charTypeCountsContainer { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-color);}
+        #charTypeCountsContainer .result-item-small { display: inline-block; width: 48%; }
+
+
+        /* --- Random Number Generator --- */
+        .randnum-inputs { display: flex; gap: 10px; margin-bottom: 10px; }
+        .randnum-inputs .form-group { flex: 1; margin-bottom: 0; }
+        #randNumResultOutputContainer .value { color: var(--tredenary-color); font-size: 1.1em; display: block; max-height: 100px; overflow-y: auto; background-color: white; padding: 5px; border-radius: 4px;}
+
+
+        /* --- Loan Calculator --- */
+        #loanResultOutput .value { color: var(--quattuordenary-color); }
+        .loan-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px;}
+        .loan-inputs .form-group { margin-bottom: 5px; }
+
+        /* --- Body Fat Calculator --- */
+        #bfpResultOutput .value { color: var(--quindenary-color); }
+        #bfpFemaleInputs { display: none; }
+        .bfp-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px;}
+        .bfp-inputs .form-group { margin-bottom: 5px; }
+
+
+        /* --- Notes / Scratchpad --- */
+        #notesArea { min-height: 120px; resize: vertical; margin-bottom: 10px; }
+        .notes-actions { display: flex; justify-content: flex-end; align-items: center; gap: 10px;}
+        #notesStatus { font-size: 0.8em; color: var(--success-color); min-height: 1em; flex-grow: 1; text-align: left;}
+
+
+        /* --- Time Zone Converter --- */
+        #timeZoneResultOutput .value { color: var(--septendenary-color); font-size: 1.2em; }
+        .time-zone-display { text-align: center; margin-top: 10px;}
+        .time-zone-display p { margin: 5px 0; }
+        .time-zone-display .local-time { font-weight: bold; }
+
+        /* --- Stopwatch --- */
+        #stopwatchDisplay {
+            font-size: 2.5em; text-align: center; margin-bottom: 15px;
+            color: var(--stopwatch-accent); font-family: 'Courier New', Courier, monospace;
+        }
+        #stopwatchLaps { list-style-type: none; padding-left: 0; max-height: 100px; overflow-y: auto; font-size: 0.9em; background-color: var(--bg-color); border-radius: 4px; padding: 8px;}
+        #stopwatchLaps li { padding: 4px 0; border-bottom: 1px dashed var(--border-color); }
+        #stopwatchLaps li:last-child { border-bottom: none; }
+        .stopwatch-buttons button { background-color: var(--stopwatch-accent); }
+        .stopwatch-buttons button:hover { filter: brightness(110%);}
+
+        /* --- QR Code Generator --- */
+        #qrcodeOutput { margin: 15px auto; width: 200px; height: 200px; border: 1px solid var(--border-color); padding: 5px; background-color: white; }
+        #qrcodeOutput img, #qrcodeOutput canvas { display: block; margin: auto; }
+        #generateQrBtn { background-color: var(--qrcode-accent); }
+        #downloadQrBtn { background-color: var(--adv-btn-bg); color: var(--text-color); }
+        #downloadQrBtn:hover { background-color: var(--adv-btn-hover-bg); }
+
+
+        /* --- Base64 Encoder/Decoder --- */
+        #base64ConvertBtn { background-color: var(--base64-accent); }
+        .base64-controls { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
+
+        /* --- Case Converter --- */
+        .case-converter-buttons button { background-color: var(--caseconv-accent); margin-bottom: 5px; font-size: 0.85em;}
+        .case-converter-buttons button:hover { filter: brightness(110%); }
+
+        /* --- Lorem Ipsum Generator --- */
+        #loremGenerateBtn { background-color: var(--lorem-accent); }
+        .lorem-controls { display: flex; gap: 10px; align-items: flex-end; margin-bottom: 10px; }
+        .lorem-controls .form-group { flex: 1; margin-bottom: 0;}
+
+        /* --- File Hash Calculator --- */
+        #calculateFileHashBtn { background-color: var(--
